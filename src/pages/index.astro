@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/BaseLayout.astro';
+import AsciiAnimation from '../components/AsciiAnimation.astro';
+---
+
+<Layout title="Quacoo">
+
+    <AsciiAnimation />
+    <section class="section">
+      <h1 class="section__header">Hello there,<br> I am <span id="myname">Kwaku Boateng</span>.</h1>
+      <p>
+        I am graduate computer science student with a bachelor's degree in physics.
+        This blog is is document my thoughts, ideas, projects and research as I journey into the essence of computer science.
+      </p>
+    </section>
+
+</Layout>
+
+
+
+<style lang="scss">
+  #myname{
+    color: var(--green-5);
+  }
+  
+
+</style>

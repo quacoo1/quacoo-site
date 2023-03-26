@@ -1,0 +1,20 @@
+{
+  "name": "quacoo-site",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --host",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^2.0.18",
+    "open-props": "^1.5.6",
+    "p5": "^1.6.0"
+  },
+  "devDependencies": {
+    "sass": "^1.59.3"
+  }
+}

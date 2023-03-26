@@ -1,0 +1,54 @@
+<div class="hamburger">
+    <span class="hamburger__line"></span>
+    <span class="hamburger__line"></span>
+    <span class="hamburger__line"></span>
+</div>
+
+<style lang="scss">
+.hamburger{
+ 		border-radius: var(--radius-2);
+    background: var(--gray-9); 
+		padding: 0.875rem;		
+    
+    &__line{
+     display: none;
+     width: 1.5rem; 
+     height: 2px;
+     background-color: var(--green-3);
+     transition: transform 0.3s;
+     &:not(:last-child){margin-bottom: 5px;}
+    }
+    &--toggled{
+      &>span{
+        visibility: hidden;
+        background-color: var(--red-5); 
+        transform-origin: center;
+      }
+      &>span:first-child{
+        visibility: visible;
+        transform: translateY(7px)  rotate(45deg);
+      }
+      &>span:last-child{
+        visibility: visible;
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
+}  
+
+@media screen and (min-width: 636px) {
+ .hamburger{
+   display: none; 
+ } 
+}
+</style>
+
+<script>
+    const hamburger = document.querySelector('.hamburger');
+    const NavigationLinks = document.querySelector('.nav__links');
+      hamburger.addEventListener('click',() => {
+
+        const visibility = NavigationLinks.dataset.visibility === 'true';
+        NavigationLinks.dataset.visibility = visibility ? 'false' : 'true';
+        hamburger.classList.toggle('hamburger--toggled'); 
+    });
+</script>
