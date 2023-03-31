@@ -2,7 +2,7 @@
 import Navigation from './Navigation.astro';
 ---
 
-<header>
+<header class="header">
   <div class="top">
 	<div class="logo">Q<span class="trailing">uacoo</span></div>
   </div>
@@ -11,7 +11,7 @@ import Navigation from './Navigation.astro';
 </header>
 
 <style lang="scss">
-	header{	
+	.header{	
 		position: sticky;
 		top: -3rem;
 		display: flex;
@@ -19,6 +19,8 @@ import Navigation from './Navigation.astro';
     	align-items: center;
     	gap: var(--size-7);
 		padding: var(--size-3) var(--size-7);
+		z-index: 100;
+		
 	}
 
 	

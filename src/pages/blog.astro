@@ -8,10 +8,8 @@ const pageTitle = "Quacoo Blog";
     <section class="section">
         <h1 class="section__header">Blog Posts</h1>
         <ul>
-            {allPosts.reverse().map((post) =>
-                
+            {allPosts.reverse().map((post) => 
                 <BlogPost url={ post.url } frontmatter={ post.frontmatter } />
-                
             )}
         </ul>
     </section>
