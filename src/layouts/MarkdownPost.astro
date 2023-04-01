@@ -1,0 +1,34 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+const { frontmatter } = Astro.props;
+---
+<BaseLayout title={frontmatter.title}>
+    <section class="section">
+        <figure class="banner">
+            <img class="banner__image" src={frontmatter.image.url} alt={frontmatter.image.alt} />
+        </figure>
+        <h1 class="section__header section__header--center">{frontmatter.title}</h1>
+        <p class="content">
+            <slot />
+        </p>
+    </section>
+</BaseLayout>
+
+
+<style lang="scss">
+    .banner{
+        display: flex;
+        overflow: hidden;
+        margin: var(--size-5) 0;
+        border-radius: var(--radius-2);
+        &__image{
+            width: 100%;
+            aspect-ratio: 16/6;
+            object-fit: cover;
+        }
+    }
+
+    // .content{
+    //     padding: var(--size-6) 0; 
+    // }
+</style>
