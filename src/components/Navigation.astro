@@ -2,7 +2,7 @@
   <div class="nav__links" data-visibility="false">
     <a href="/" class="nav__link">home</a>
     <a href="/blog" class="nav__link">blog</a>
-    <a class="nav__link">projects</a>
+    <a class="nav__link nav__link--disabled">projects</a>
   </div>
 </nav>
 
@@ -26,6 +26,11 @@
 				&:hover{
 					color:var(--green-4);
 				}
+
+        &--disabled{
+          color: var(--gray-7);
+          &:hover{color: var(--gray-7);}
+        }
 			}
   }
 /* @media screen and (max-width: 635px) { */
