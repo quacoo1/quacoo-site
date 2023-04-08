@@ -1,0 +1,143 @@
+<div class="scene">
+    <div class="shape shape--rotate"></div>
+</div>
+
+
+<style is:global>
+    /* #debug{
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 1em;
+        color: #fff;
+        font-family: 'Courier Prime', monospace;
+        background-color: blue;
+    } */
+    .scene{
+        --sc-size: 300;
+        position: relative;
+        display:flex;
+        justify-content:center;
+        align-items: center;
+        width: calc(var(--sc-size) * 1px);
+        aspect-ratio: 1 / 1;
+        margin: 2em auto;
+        perspective: calc(var(--sc-size) * 2);
+        perspective-origin: center;
+        user-select: none;
+        /* outline: solid 1px red; */
+    }
+
+    .shape{
+        --sh-size: 250;
+        --x-angle: 2;
+        --y-angle: 0;
+
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform-origin: center;
+        transform-style: preserve-3d;
+        transform: rotateX(calc(var(--x-angle) * 1rad)) rotateY(calc(var(--y-angle) * 1rad));
+        width: calc(var(--sh-size) * 1px);
+        aspect-ratio: 1 / 1;
+    }
+    
+    .shape:active{
+        cursor: grab;
+    }
+
+    .shape--rotate{
+        animation: spin 20s linear infinite;
+    }
+
+
+    @keyframes spin {
+        0% { transform: rotateX(0deg) rotateY(  0deg); }
+        50%{ transform: rotateX(180deg) rotateY(  180deg);}
+        100% { transform: rotateX(360deg) rotateY(360deg); }
+    }
+
+    .circle{
+        --cc-size: var(--sh-size);
+        --z-position: 0;
+        position: absolute;
+        width: calc(var(--cc-size) * 1px);
+        transform: translateZ(var(--z-position));
+        aspect-ratio: 1 / 1;
+        border: solid 1px var(--gray-8);
+        border-radius: 50%;
+    }
+</style>
+
+<script>
+    const DBG = document.querySelector('#debug')
+    const shape = {
+        el: document.querySelector('.shape') as HTMLElement,
+        pos: {x: 0, y: 0},
+        mouseStart: {x: 0, y: 0}
+    }
+
+    const scene = {
+        el: document.querySelector('.scene') as HTMLElement,
+        clicked: false,
+    }
+
+    const NUM_OF_CIRCLES = 20;
+    const HALF = NUM_OF_CIRCLES / 2;
+    const RADIUS = Number(getComputedStyle(shape.el).getPropertyValue("--sh-size")) / 2;
+    const CIRCLE_SPACING = (RADIUS / HALF);
+    
+
+    for(let i = -HALF; i <= HALF; i++){
+        console.log("test");
+        const circle = document.createElement('div');
+        circle.classList.add('circle');
+        let x = CIRCLE_SPACING * i;
+        let size = 2 * Math.sqrt(RADIUS ** 2 - x ** 2);
+        circle.style.setProperty('--cc-size', `${size}`);
+        circle.style.setProperty('--z-position', `${-1 * CIRCLE_SPACING * i}px`);
+        shape.el.appendChild(circle);
+    }
+
+
+
+    scene.el.addEventListener("mousedown", event => { 
+        shape.mouseStart.x = event.clientX;
+        shape.mouseStart.y = event.clientY;
+        shape.el.classList.remove('shape--rotate');
+        scene.clicked = true; 
+    });
+
+    scene.el.addEventListener('mousemove', (event) => {
+        if(scene.clicked === true){
+            let deltaY = shape.mouseStart.y - event.clientY;
+            let deltaX =  shape.mouseStart.x - event.clientX;
+            shape.pos.y += deltaY / RADIUS;
+            shape.pos.x += deltaX / RADIUS;
+            
+            // DBG.innerHTML = `
+            //                 ------> x:${shape.mouseStart.x} y: ${shape.mouseStart.y} <br />
+            //                 Angles: x:${shape.pos.x} y: ${shape.pos.y} <br/>
+            //                 clicked: ${scene.clicked}
+
+            //                 `
+            shape.el.style.setProperty('--y-angle', `${shape.pos.x}`);
+            shape.el.style.setProperty('--x-angle', `${shape.pos.y}`);
+            shape.mouseStart.x = event.clientX;
+            shape.mouseStart.y = event.clientY;
+        }
+    })
+
+    document.addEventListener("mouseup", function(){
+        scene.clicked = false;
+        shape.el.classList.add('shape--rotate');
+        // DBG.innerHTML = `
+        //                 ------> x:${shape.mouseStart.x} y: ${shape.mouseStart.y} <br />
+        //                 Angles: x:${shape.pos.x} y: ${shape.pos.y} <br/>
+        //                 clicked: ${scene.clicked}
+        //                 `
+    });
+
+</script>
