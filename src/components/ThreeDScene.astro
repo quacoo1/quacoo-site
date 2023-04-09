@@ -39,7 +39,8 @@
         justify-content: center;
         transform-origin: center;
         transform-style: preserve-3d;
-        transform: rotateX(calc(var(--x-angle) * 1rad)) rotateY(calc(var(--y-angle) * 1rad));
+
+        transform: rotate3d(1,0,0, calc(var(--x-angle) * 1rad)) rotate3d(0,1,0,calc(var(--y-angle) * 1rad));
         width: calc(var(--sh-size) * 1px);
         aspect-ratio: 1 / 1;
     }
@@ -99,23 +100,35 @@
     const RADIUS = Number(getComputedStyle(shape.el).getPropertyValue("--sh-size")) / 2;
     const CIRCLE_SPACING = (RADIUS / HALF);
     
-    const CIRCLE_ORIENTATION_CLASS = ["", "circle--X-angle", "circle--Y-angle"]
+    // const CIRCLE_ORIENTATION_CLASS = ["", "circle--X-angle", "circle--Y-angle"]
 
-    CIRCLE_ORIENTATION_CLASS.forEach( angle => {
-        for(let i = -HALF; i <= HALF; i++){
-            const circle = document.createElement('div');
-            let x = CIRCLE_SPACING * i;
-            let size = 2 * Math.sqrt(RADIUS ** 2 - x ** 2);
+    // CIRCLE_ORIENTATION_CLASS.forEach( angle => {
+    //     for(let i = -HALF; i <= HALF; i++){
+    //         const circle = document.createElement('div');
+    //         let x = CIRCLE_SPACING * i;
+    //         let size = 2 * Math.sqrt(RADIUS ** 2 - x ** 2);
             
-            circle.classList.add('circle');
-            if (angle !== "") circle.classList.add(angle);
+    //         circle.classList.add('circle');
+    //         if (angle !== "") circle.classList.add(angle);
             
-            circle.style.setProperty('--cc-size', `${size}`);
-            circle.style.setProperty('--z-position', `${-1 * CIRCLE_SPACING * i}px`);
-            shape.el.appendChild(circle);
-        }    
-    });
+    //         circle.style.setProperty('--cc-size', `${size}`);
+    //         circle.style.setProperty('--z-position', `${-1 * CIRCLE_SPACING * i}px`);
+    //         shape.el.appendChild(circle);
+    //     }    
+    // });
     
+
+    for(let i = -HALF; i <= HALF; i++){
+        const circle = document.createElement('div');
+        let x = CIRCLE_SPACING * i;
+        let size = 2 * Math.sqrt(RADIUS ** 2 - x ** 2);
+        
+        circle.classList.add('circle');
+        
+        circle.style.setProperty('--cc-size', `${size}`);
+        circle.style.setProperty('--z-position', `${-1 * CIRCLE_SPACING * i}px`);
+        shape.el.appendChild(circle);
+    }    
 
     scene.el.addEventListener("mousedown", event => { 
         shape.mouseStart.x = event.clientX;
