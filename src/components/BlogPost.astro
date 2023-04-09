@@ -1,86 +1,95 @@
 ---
 const {url, frontmatter} = Astro.props;
+
+const dateOptions = {
+	year: "numeric",
+	month: "long",
+	day: "numeric",
+};
+
+const { title, description } = frontmatter;
+const date = new Date(frontmatter.publishDate).toLocaleDateString("en-US", dateOptions);
 ---
 
-<li class="blog-post">
+<li class="post">
     <div>
-        <h1 class="blog-post__header"><a href={ url }> { frontmatter.title }</a></h1>
-        <p>Date:  { frontmatter.pubDate }</p>
-        <p>Description:  { frontmatter.description }</p>
+        <h1 class="post__header"><a href={ url }> { title }</a></h1>
+        <p>{ description }</p>
+        <p class="post__footer">{ date }</p>
     </div>
-    <div class="blog-post__iw">
-        <img class="blog-post__image" src={ frontmatter.image.url } />
+    <div class="image-wrapper">
+        <img class="post__image" src={ frontmatter.image.url } />
     </div>
 </li>
 
 <style lang="scss">
-    .blog-post{
-        font-size: clamp( 0.875rem, 2.6vw, 1rem);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1em;
-        align-items: flex-start;
-        justify-content: space-between;
-        padding: 2em 1em;
-        line-height: 1.5;
-        opacity: 0.75;
-        &__iw{
-            display: flex;
-            flex-direction: column;
-            border-radius: var(--radius-2);
-            overflow: hidden;
-            height: 96px;
-        }
-        &__image{
-            height: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            filter: grayscale(100%);
-            transition: filter 0.3s;
-        }
+.post{
+    font-size: clamp( 0.875rem, 2.6vw, 1rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 2em 1em;
+    line-height: 1.5;
+}
 
-        &__header{
-            font-family: 'Kyiv Serif';
-            font-size: var(--size-4);
-            font-variation-settings: 'wght' 600, 'CONT' 1, 'MIDL' 0 ;
-            color: var(--green-4);
-            margin-bottom: var(--size-2);
+.post:not(:last-child){
+    border-bottom: dashed 1px var(--gray-1);
+}
+.post:hover{
+    cursor: pointer;
+}
 
-            a {
-                text-decoration: none;
-                color: var(--green-4);
-            }
-            a:hover {
-                text-decoration: underline;
-                color: var(--green-5);
-            }
-        }
+.post__header{
+    font-family: 'Kyiv Serif';
+    font-size: var(--size-4);
+    font-variation-settings: 'wght' 600, 'CONT' 1, 'MIDL' 0 ;
+    color: var(--green-4);
+    margin-bottom: var(--size-1);
+
+    a {
+        text-decoration: none;
+        color: var(--green-4);
     }
-
-    .blog-post:not(:last-child){
-        border-bottom: dashed 1px var(--gray-1);
+    a:hover {
+        text-decoration: underline;
     }
-    .blog-post:hover{
-        cursor: pointer;
-        opacity: 1;
-        transition: opacity 0.5s;
+}
 
-        .blog-post{
-            &__image{
-                filter: grayscale(0%);
-                
-            }    
-        }
-    
-    }
 
+.post__footer{
+    color: var(--gray-7);
+    font-family: 'Courier Prime', monospace;
+    font-style: italic;
+    font-size: 85%;
+}
+
+.post__image{
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.3s;
+}
+
+.post:hover .post__image{
+    filter: grayscale(0%);    
+}
+
+.image-wrapper{
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-2);
+    overflow: hidden;
+    height: 6rem;
+}
 
 
 @media screen and (max-width: 635px) { 
     .blog-post__image{
         filter: grayscale(0%);
     }
-
 } 
     
 </style>

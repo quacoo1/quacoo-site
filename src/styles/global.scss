@@ -36,7 +36,7 @@ a{
 
 
 .section{
-  padding: 0 2em;
+  padding:2em;
 
   max-width: var(--size-content-3);
   margin: 0 auto;
@@ -58,6 +58,11 @@ a{
     font-size: var(--size-3);
     margin:var(--size-7) 0;
   }
+
+  img{
+    max-width: 100%;
+  }
+
   pre,
   code {
     color: #d4d4d4;

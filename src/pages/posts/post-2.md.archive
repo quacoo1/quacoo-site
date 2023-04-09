@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/MarkdownPost.astro
 title: 'Hello World Again'
-pubDate: 2022-07-01
+publishDate: 2022-07-01
 description: 'To test multiple blog Items'
 author: 'Kwaku Boateng'
 image:
