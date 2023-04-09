@@ -53,6 +53,8 @@
     }
 
 
+
+
     @keyframes spin {
         0% { transform: rotateX(0deg) rotateY(  0deg); }
         50%{ transform: rotateX(180deg) rotateY(  180deg);}
@@ -69,10 +71,18 @@
         border: solid 1px var(--gray-8);
         border-radius: 50%;
     }
+
+    .circle--X-angle{
+        transform: rotateX(90deg) translateZ(var(--z-position));
+    }
+
+    .circle--Y-angle{
+        transform: rotateY(90deg) translateZ(var(--z-position));
+    }
 </style>
 
 <script>
-    const DBG = document.querySelector('#debug')
+    // const DBG = document.querySelector('#debug')
     const shape = {
         el: document.querySelector('.shape') as HTMLElement,
         pos: {x: 0, y: 0},
@@ -89,19 +99,23 @@
     const RADIUS = Number(getComputedStyle(shape.el).getPropertyValue("--sh-size")) / 2;
     const CIRCLE_SPACING = (RADIUS / HALF);
     
+    const CIRCLE_ORIENTATION_CLASS = ["", "circle--X-angle", "circle--Y-angle"]
 
-    for(let i = -HALF; i <= HALF; i++){
-        console.log("test");
-        const circle = document.createElement('div');
-        circle.classList.add('circle');
-        let x = CIRCLE_SPACING * i;
-        let size = 2 * Math.sqrt(RADIUS ** 2 - x ** 2);
-        circle.style.setProperty('--cc-size', `${size}`);
-        circle.style.setProperty('--z-position', `${-1 * CIRCLE_SPACING * i}px`);
-        shape.el.appendChild(circle);
-    }
-
-
+    CIRCLE_ORIENTATION_CLASS.forEach( angle => {
+        for(let i = -HALF; i <= HALF; i++){
+            const circle = document.createElement('div');
+            let x = CIRCLE_SPACING * i;
+            let size = 2 * Math.sqrt(RADIUS ** 2 - x ** 2);
+            
+            circle.classList.add('circle');
+            if (angle !== "") circle.classList.add(angle);
+            
+            circle.style.setProperty('--cc-size', `${size}`);
+            circle.style.setProperty('--z-position', `${-1 * CIRCLE_SPACING * i}px`);
+            shape.el.appendChild(circle);
+        }    
+    });
+    
 
     scene.el.addEventListener("mousedown", event => { 
         shape.mouseStart.x = event.clientX;
